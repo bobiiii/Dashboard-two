@@ -120,7 +120,7 @@ function Signin() {
               <p
                 className={`text-left ${
                   color ? 'text-success' : 'text-danger'
-                } `}
+                }`}
               >
                 {msg}
               </p>
