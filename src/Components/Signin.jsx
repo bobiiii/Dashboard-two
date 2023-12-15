@@ -7,11 +7,13 @@ function Signin() {
   const [loading, setLoading] = useState(false);
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
-  // const [color, setColor] = useState(false);
+  const [invalidCred, setInvalidCred] = useState('');
+  const [color, setColor] = useState(false);
+  const [msg, setMsg] = useState(false);
 
   const naviagte = useNavigate();
 
-  const { serverURL, setIsLogin, setCurrentUser, setRole } = useAuth();
+  const { setIsLogin, setCurrentUser, setRole } = useAuth();
 
   const email = useRef();
   const password = useRef();
@@ -31,7 +33,6 @@ function Signin() {
       try {
         const response = await axios.post(url, json);
         setLoading(false);
-
         setCurrentUser(response.data.user);
         const token = response.data.token;
         const expirationTime = new Date();
@@ -45,8 +46,8 @@ function Signin() {
           expires: expirationTime,
         });
         setRole(response.data.user.role);
+        setColor(true);
         setIsLogin(true);
-        // setColor(true);
         naviagte('/');
       } catch (err) {
         setLoading(false);
@@ -117,13 +118,14 @@ function Signin() {
                 placeholder="Password"
               />
               <p className="error-message text-danger">{passwordError}</p>
-              {/* <p
+              <p className="error-message text-danger">{invalidCred}</p>
+              <p
                 className={`text-left ${
                   color ? 'text-success' : 'text-danger'
-                } `}
+                }`}
               >
                 {msg}
-              </p> */}
+              </p>
             </div>
             <div className="submit-container mt-4">
               <button
