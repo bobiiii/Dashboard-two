@@ -49,10 +49,11 @@ function Signin() {
         // setColor(true);
         naviagte('/');
       } catch (err) {
-        console.log(err);
-        // setColor(false);
-      } finally {
         setLoading(false);
+        if (err.response.data.status === 'Fail') {
+          return setInvalidCred(err.response.data.message);
+        }
+        console.log(err.response.data.message);
       }
     }
   }
